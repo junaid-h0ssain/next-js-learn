@@ -39,7 +39,7 @@ export default function RootLayout({
             moveParticlesOnHover
             alphaParticles={false}
             disableRotation={false}
-            pixelRatio={1} className={undefined}          />
+            pixelRatio={1} className={undefined}/>
         </div>
         {children}
       </body>
