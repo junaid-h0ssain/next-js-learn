@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Particles from '../components/Particles';
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,8 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar />
 
-        <div style={{ width: '100%', height: '600px', position: 'absolute' }}>
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 0
+          }}
+        >
           <Particles
             particleColors={["#ffffff"]}
             particleCount={200}
@@ -41,7 +51,7 @@ export default function RootLayout({
             disableRotation={false}
             pixelRatio={1} className={undefined}/>
         </div>
-        {children}
+        <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
       </body>
     </html>
   );
