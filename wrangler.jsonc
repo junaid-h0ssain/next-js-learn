@@ -1,7 +1,4 @@
 {
   "name": "nextjs-learn",
-  "pages_build_output_dir": "out",
-  "build": {
-    "command": "bun run build && bun run export"
-  }
+  "pages_build_output_dir": "out"
 }
