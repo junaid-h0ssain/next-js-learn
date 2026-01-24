@@ -127,6 +127,9 @@ const Particles: React.FC<ParticlesProps> = ({
     const gl = renderer.gl;
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);
+    // Let interactions pass through while still tracking cursor position
+    container.style.pointerEvents = 'none';
+    gl.canvas.style.pointerEvents = 'none';
 
     const camera = new Camera(gl, { fov: 15 });
     camera.position.set(0, 0, cameraDistance);
@@ -148,7 +151,7 @@ const Particles: React.FC<ParticlesProps> = ({
     };
 
     if (moveParticlesOnHover) {
-      container.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
     }
 
     const count = particleCount;
@@ -228,12 +231,13 @@ const Particles: React.FC<ParticlesProps> = ({
     return () => {
       window.removeEventListener('resize', resize);
       if (moveParticlesOnHover) {
-        container.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mousemove', handleMouseMove);
       }
       cancelAnimationFrame(animationFrameId);
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
+      container.style.pointerEvents = '';
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

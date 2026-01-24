@@ -1,6 +1,8 @@
 import React from 'react';
 import Hello from '../components/hello';
 import ExploreBtn from '@/components/ExploreBtn';
+import EventCard from '@/components/EventCard';
+import {events} from '@/lib/events';
 
 export default function Home() {
   return (
@@ -12,14 +14,13 @@ export default function Home() {
 
         <ExploreBtn/>
 
-        <div className='mt-20 space-y-7 text-amber-200'>
+        <div className='mt-20 space-y-7 text-amber-50'>
           <h3>Features Events</h3>
 
           <ul className='events'>
-            {[1, 2, 3, 4, 5].map((event) => (
-              <li key={event} className='event-item'>
-                <h4>Event Title {event}</h4>
-                <p>This is a description for event number {event}.</p>
+            {events.map((event) => (
+              <li key={event.title} className='event-item'>
+                <EventCard {...event}/>
               </li>
             ))}
           </ul>
