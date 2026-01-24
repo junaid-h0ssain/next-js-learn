@@ -1,29 +1,7 @@
 {
-    // Cloudflare Pages configuration for Next.js deployment
-    "name": "nextjs-learn",
-    "type": "javascript",
-    "compatibility_date": "2026-01-24",
-    // Pages build configuration
-    "pages_build_output_dir": ".next/standalone",
-    "build": {
-        "command": "bun run build",
-        "cwd": "./"
-    },
-    "env": {
-        "production": {
-            "name": "nextjs-learn-prod",
-            "routes": [
-                {
-                    "pattern": "*",
-                    "zone_name": "example.com"
-                }
-            ]
-        },
-        "staging": {
-            "name": "nextjs-learn-staging"
-        }
-    },
-    "triggers": {
-        "crons": []
-    }
+  "name": "nextjs-learn",
+  "pages_build_output_dir": "out",
+  "build": {
+    "command": "bun run build && bun run export"
+  }
 }
