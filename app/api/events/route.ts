@@ -17,16 +17,24 @@ export async function POST(request: NextRequest) {
 
         console.log('Received event data:', event);
 
-        const createdEvent = await Event.create(event);
+        // Parse arrays from semicolon-separated strings
+        const processedEvent = {
+            ...event,
+            agenda: typeof event.agenda === 'string' ? event.agenda.split(';').map((s: string) => s.trim()) : event.agenda,
+            tags: typeof event.tags === 'string' ? event.tags.split(';').map((s: string) => s.trim()) : event.tags,
+        };
+
+        const createdEvent = await Event.create(processedEvent);
 
         return NextResponse.json({ message: 'Event created successfully', event: createdEvent }, { status: 201 });
     }
-    catch (error) {
+    catch (error: unknown) {
         console.error('Error handling POST request:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: 'Internal Server Error', details: message }, { status: 500 });
     }
 }
 
 export async function GET() {
-    return new Response('Handle GET request for /api/events');
+    return new Response('You are in /api/events');
 }
