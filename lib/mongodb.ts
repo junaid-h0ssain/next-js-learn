@@ -1,61 +1,66 @@
 import mongoose from 'mongoose';
 
-// Declare a global variable to cache the database connection
-// This prevents multiple connections during hot reloads in development
-// and ensures connection reuse in serverless environments
+// Define the connection cache type
+type MongooseCache = {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+};
+
+// Extend the global object to include our mongoose cache
 declare global {
-    var mongoose: any; // This must be a `var` and not a `let / const`
+    // eslint-disable-next-line no-var
+    var mongoose: MongooseCache | undefined;
 }
 
-// Get the MongoDB connection string from environment variables
-const MONGODB_URI = process.env.MONGO_URI!;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-// Validate that the MongoDB URI is provided
-if (!MONGODB_URI) {
-    throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+
+// Initialize the cache on the global object to persist across hot reloads in development
+let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+
+if (!global.mongoose) {
+    global.mongoose = cached;
 }
 
-// Initialize the cached connection object
-// This will store the connection and connection promise globally
-let cached = global.mongoose;
-
-if (!cached) {
-    // Create a new cache object if it doesn't exist
-    // conn: stores the actual mongoose connection
-    // promise: stores the connection promise to prevent duplicate connection attempts
-    cached = global.mongoose = { conn: null, promise: null };
-}
-
-// Main database connection function
-async function dbConnect() {
-    // Return the cached connection if it already exists
+/**
+ * Establishes a connection to MongoDB using Mongoose.
+ * Caches the connection to prevent multiple connections during development hot reloads.
+ * @returns Promise resolving to the Mongoose instance
+ */
+async function connectDB(): Promise<typeof mongoose> {
+    // Return existing connection if available
     if (cached.conn) {
         return cached.conn;
     }
 
-    // If no connection promise exists, create one
+    // Return existing connection promise if one is in progress
     if (!cached.promise) {
-        const opts = {
-            bufferCommands: false, // Disable mongoose buffering for better performance
+        // Validate MongoDB URI exists
+        if (!MONGODB_URI) {
+            throw new Error(
+                'Please define the MONGODB_URI environment variable inside .env.local'
+            );
+        }
+        const options = {
+            bufferCommands: false, // Disable Mongoose buffering
         };
 
-        // Create a connection promise and store it in the cache
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+        // Create a new connection promise
+        cached.promise = mongoose.connect(MONGODB_URI!, options).then((mongoose) => {
             return mongoose;
         });
     }
 
     try {
-        // Wait for the connection promise to resolve and cache the connection
+        // Wait for the connection to establish
         cached.conn = await cached.promise;
-    } catch (e) {
-        // If connection fails, reset the promise so it can be retried
+    } catch (error) {
+        // Reset promise on error to allow retry
         cached.promise = null;
-        throw e;
+        throw error;
     }
 
-    // Return the established connection
     return cached.conn;
 }
 
-export default dbConnect;
+export default connectDB;
