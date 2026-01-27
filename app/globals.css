@@ -124,7 +124,9 @@
   }
 
   h1 {
-    @apply text-gradient text-6xl font-semibold max-sm:text-4xl mb-2;
+    @apply text-gradient text-6xl font-semibold max-sm:text-4xl;
+    line-height: 1.2;
+    padding-bottom: 0.2em;
   }
 
   h3 {

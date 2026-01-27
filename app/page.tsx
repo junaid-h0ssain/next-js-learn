@@ -10,7 +10,14 @@ export default async function Home() {
 
   try {
     await connectDB();
-    events = await Event.find().sort({ createdAt: -1 }).lean();
+    const dbEvents = await Event.find().sort({ createdAt: -1 }).lean();
+    // Convert MongoDB documents to plain objects with serializable data
+    events = dbEvents.map(event => ({
+      ...event,
+      _id: event._id.toString(),
+      createdAt: event.createdAt.toISOString(),
+      updatedAt: event.updatedAt.toISOString(),
+    })) as IEvent[];
   } catch (error) {
     console.error('Error fetching events:', error);
     // Fall back to static events
