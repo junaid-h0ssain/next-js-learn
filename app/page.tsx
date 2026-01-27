@@ -2,22 +2,15 @@ import ExploreBtn from '@/components/ExploreBtn';
 import EventCard from '@/components/EventCard';
 import { events as staticEvents } from '@/lib/events';
 import { IEvent } from '@/database/event.model';
+import connectDB from '@/lib/mongodb';
+import { Event } from '@/database';
 
 export default async function Home() {
   let events: IEvent[] = [];
 
   try {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${BASE_URL}/api/events`, { cache: 'no-store' });
-    
-    if (res.ok) {
-      const data = await res.json();
-      events = data.events || [];
-    } else {
-      console.error('Failed to fetch events:', res.status, res.statusText);
-      // Fall back to static events
-      events = staticEvents as IEvent[];
-    }
+    await connectDB();
+    events = await Event.find().sort({ createdAt: -1 });
   } catch (error) {
     console.error('Error fetching events:', error);
     // Fall back to static events
