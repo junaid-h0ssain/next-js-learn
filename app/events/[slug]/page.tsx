@@ -1,242 +1,192 @@
-import Image from 'next/image';
-import { IEvent } from '@/database/event.model';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
 
-type EventPayload =
-  | { success: true; data: IEvent }
-  | { success: false; error: { message: string } };
+import Image from "next/image";
 
-const formatDate = (value: string) => {
-  const timestamp = Date.parse(value);
-  if (Number.isNaN(timestamp)) {
-    return value;
-  }
+import { Event } from "@/database/event.model";
 
-  return new Intl.DateTimeFormat('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(new Date(timestamp));
-};
-
-const formatTime = (value: string) => {
-  if (!value) {
-    return '';
-  }
-
-  const [hours, minutes] = value.split(':').map((part) => Number(part));
-  if (Number.isNaN(hours) || Number.isNaN(minutes)) {
-    return value;
-  }
-
-  const date = new Date();
-  date.setHours(hours, minutes);
-
-  return new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-  }).format(date);
-};
-
-const EventDetails = async ({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) => {
+const EventDetails = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
-  if (!slug) {
-    return <div className="text-amber-50">Event slug is missing.</div>;
+  const request = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`,
+    { cache: "no-store" }
+  );
+  const { data }: { data: Event } = await request.json();
+
+  if (!data) {
+    return <div className="text-amber-50">Event not found</div>;
   }
 
-  const response = await fetch(`${BASE_URL}/api/events/${slug}`, {
-    cache: 'no-store',
+  const formattedDate = new Date(data.date).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
-  const payload = (await response.json()) as EventPayload;
-
-  if (!response.ok || !payload.success || !payload.data) {
-    const message =
-      payload?.error?.message ?? 'We could not find this event right now.';
-    return <div className="text-amber-50">{message}</div>;
-  }
-
-  const event = payload.data;
-  const friendlyDate = formatDate(event.date);
-  const friendlyTime = formatTime(event.time);
-  const agendaList =
-    Array.isArray(event.agenda) && event.agenda.length > 0
-      ? event.agenda
-      : ['Agenda coming soon'];
-  const tags = Array.isArray(event.tags) ? event.tags : [];
-  const modeLabel = event.mode
-    ? `${event.mode.at(0)?.toUpperCase() ?? ''}${event.mode.slice(1)}`
-    : 'Event';
-
   return (
-    <section id="event" className="py-16">
-      <header className="header">
-        <div className="flex flex-row flex-wrap items-center gap-3">
-          <span className="pill">{modeLabel}</span>
-          <span className="pill">{event.audience}</span>
-          <span className="pill">{event.venue}</span>
-        </div>
-        <div className="flex flex-col gap-2">
-          <h1 className="text-5xl font-semibold leading-tight">{event.title}</h1>
-          <p className="text-light-100 text-lg max-w-2xl">{event.overview}</p>
-        </div>
-        <div className="flex flex-row flex-wrap gap-10">
-          <div className="flex flex-col gap-1">
-            <span className="text-sm uppercase tracking-[0.3em] text-light-200">
-              Start
+    <section id="event" className="m-10">
+      {/* Header Section */}
+      <div className="header">
+        <h1>{data.title}</h1>
+        <p>{data.description}</p>
+        <div className="flex flex-wrap gap-2">
+          {data.tags.map((tag, index) => (
+            <span key={index} className="pill">
+              {tag}
             </span>
-            <div className="flex flex-row items-center gap-3">
-              <Image
-                src="/icons/calendar.svg"
-                alt="Calendar icon"
-                width={20}
-                height={20}
-              />
-              <p className="text-light-100 text-lg">{friendlyDate}</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <span className="text-sm uppercase tracking-[0.3em] text-light-200">
-              Time
-            </span>
-            <div className="flex flex-row items-center gap-3">
-              <Image src="/icons/clock.svg" alt="Clock icon" width={20} height={20} />
-              <p className="text-light-100 text-lg">{friendlyTime}</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <span className="text-sm uppercase tracking-[0.3em] text-light-200">
-              Location
-            </span>
-            <div className="flex flex-row items-center gap-3">
-              <Image src="/icons/pin.svg" alt="Pin icon" width={20} height={20} />
-              <p className="text-light-100 text-lg">{event.location}</p>
-            </div>
-          </div>
+          ))}
         </div>
-      </header>
+      </div>
 
+      {/* Main Content */}
       <div className="details">
+        {/* Left Content - Banner, Overview, Agenda */}
         <div className="content">
           <Image
-            src={event.image}
-            alt={event.title}
-            width={1200}
-            height={675}
+            src={data.image}
+            alt={data.title}
+            width={600}
+            height={300}
             className="banner"
-            priority
           />
 
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-row flex-wrap gap-10">
-              <div className="flex flex-row-gap-2 items-center">
-                <Image
-                  src="/icons/audience.svg"
-                  alt="Audience icon"
-                  width={20}
-                  height={20}
-                />
-                <div>
-                  <p className="text-light-200 text-xs uppercase tracking-[0.3em]">Audience</p>
-                  <p className="text-light-100 text-lg">{event.audience}</p>
-                </div>
-              </div>
-              <div className="flex flex-row-gap-2 items-center">
-                <Image
-                  src="/icons/mode.svg"
-                  alt="Mode icon"
-                  width={20}
-                  height={20}
-                />
-                <div>
-                  <p className="text-light-200 text-xs uppercase tracking-[0.3em]">Mode</p>
-                  <p className="text-light-100 text-lg">{modeLabel}</p>
-                </div>
-              </div>
-              <div className="flex flex-row-gap-2 items-center">
-                <Image
-                  src="/icons/pin.svg"
-                  alt="Venue icon"
-                  width={20}
-                  height={20}
-                />
-                <div>
-                  <p className="text-light-200 text-xs uppercase tracking-[0.3em]">Venue</p>
-                  <p className="text-light-100 text-lg">{event.venue}</p>
-                </div>
-              </div>
-            </div>
+          {/* Overview Section */}
+          <div className="flex-col-gap-2">
+            <h2>Overview</h2>
+            <p>{data.overview}</p>
+          </div>
 
-            <p className="text-light-100 text-lg max-w-3xl">{event.description}</p>
-
-            <div className="flex flex-row flex-wrap gap-3">
-              {tags.map((tag) => (
-                <span key={tag} className="pill text-xs">
-                  {tag}
-                </span>
+          {/* Agenda Section */}
+          <div className="agenda">
+            <h2>Agenda</h2>
+            <ul>
+              {data.agenda.map((item, index) => (
+                <li key={index}>{item}</li>
               ))}
-            </div>
+            </ul>
+          </div>
 
-            <div className="agenda">
-              <h3 className="text-2xl font-bold">Agenda</h3>
-              <ul>
-                {agendaList.map((item, index) => (
-                  <li key={`${item}-${index}`}>{item}</li>
-                ))}
-              </ul>
-            </div>
+          {/* Organizer Section */}
+          <div className="flex-col-gap-2">
+            <h2>Organizer</h2>
+            <p className="mb-10">{data.organizer}</p>
           </div>
         </div>
 
+        {/* Right Sidebar - Booking Section */}
         <div className="booking">
           <div className="signup-card">
-            <div className="flex flex-col gap-2">
-              <p className="text-light-200 text-xs uppercase tracking-[0.3em]">Organizer</p>
-              <p className="text-light-100 text-lg">{event.organizer}</p>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <p className="text-light-200 text-xs uppercase tracking-[0.3em]">When</p>
-              <p className="text-light-100 text-lg">
-                {friendlyDate} • {friendlyTime}
-              </p>
-            </div>
-
-            <form id="book-event">
-              <div>
-                <label className="text-light-200 text-xs uppercase tracking-[0.3em]" htmlFor="name">
-                  Full name
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Your full name"
+            {/* Event Details */}
+            <div className="flex flex-col gap-4">
+              {/* Venue & Location */}
+              <div className="flex-row-gap-2">
+                <Image
+                  src="/icons/pin.svg"
+                  alt="Location"
+                  width={20}
+                  height={20}
                 />
+                <div className="flex flex-col">
+                  <span className="text-light-100 text-sm">Venue</span>
+                  <span className="text-white font-medium">
+                    {data.venue}, {data.location}
+                  </span>
+                </div>
               </div>
-              <div>
-                <label className="text-light-200 text-xs uppercase tracking-[0.3em]" htmlFor="email">
-                  Email
-                </label>
-                <input id="email" name="email" type="email" placeholder="you@example.com" />
+
+              {/* Date */}
+              <div className="flex-row-gap-2">
+                <Image
+                  src="/icons/calendar.svg"
+                  alt="Date"
+                  width={20}
+                  height={20}
+                />
+                <div className="flex flex-col">
+                  <span className="text-light-100 text-sm">Date</span>
+                  <span className="text-white font-medium">{formattedDate}</span>
+                </div>
               </div>
-              <div>
-                <label
-                  className="text-light-200 text-xs uppercase tracking-[0.3em]"
-                  htmlFor="tickets"
-                >
-                  Tickets
-                </label>
-                <input id="tickets" name="tickets" type="number" min="1" defaultValue={1} />
+
+              {/* Time */}
+              <div className="flex-row-gap-2">
+                <Image
+                  src="/icons/clock.svg"
+                  alt="Time"
+                  width={20}
+                  height={20}
+                />
+                <div className="flex flex-col">
+                  <span className="text-light-100 text-sm">Time</span>
+                  <span className="text-white font-medium">{data.time}</span>
+                </div>
               </div>
-              <button type="button">Book this event</button>
-            </form>
+
+              {/* Mode */}
+              <div className="flex-row-gap-2">
+                <Image
+                  src="/icons/mode.svg"
+                  alt="Mode"
+                  width={20}
+                  height={20}
+                />
+                <div className="flex flex-col">
+                  <span className="text-light-100 text-sm">Mode</span>
+                  <span className="text-white font-medium">{data.mode}</span>
+                </div>
+              </div>
+
+              {/* Audience */}
+              <div className="flex-row-gap-2">
+                <Image
+                  src="/icons/audience.svg"
+                  alt="Audience"
+                  width={20}
+                  height={20}
+                />
+                <div className="flex flex-col">
+                  <span className="text-light-100 text-sm">Audience</span>
+                  <span className="text-white font-medium">{data.audience}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="w-full h-px bg-gray-700" />
+
+            {/* Sign Up Form */}
+            <div id="book-event">
+              <h2 className="text-white">Sign Up for Event</h2>
+              <form>
+                <div>
+                  <label htmlFor="name" className="text-light-100 text-sm">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
+                    className="placeholder-white"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="text-light-100 text-sm">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    className="placeholder-white"
+                  />
+                </div>
+                <button className="bg-green-500 text-white" type="submit">Book My Spot</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
