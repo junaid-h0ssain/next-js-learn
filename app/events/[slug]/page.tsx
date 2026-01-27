@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { Event } from "@/database/event.model";
+import { IEvent } from "@/database/event.model";
 
 const EventDetails = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
@@ -10,7 +10,7 @@ const EventDetails = async ({ params }: { params: { slug: string } }) => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`,
     { cache: "no-store" }
   );
-  const { data }: { data: Event } = await request.json();
+  const { data }: { data: IEvent } = await request.json();
 
   if (!data) {
     return <div className="text-amber-50">Event not found</div>;
