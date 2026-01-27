@@ -87,5 +87,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-    return new Response('You are in /api/events');
+    try{
+        await connectDB();
+        const events = await Event.find().sort({ createdAt: -1 });
+        return NextResponse.json({ events }, { status: 200 });
+    }catch (error) {
+        return NextResponse.json({ error: 'Internal Server Error', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 }); 
+    }
 }

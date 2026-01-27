@@ -1,10 +1,16 @@
-import React from 'react';
-import Hello from '../components/hello';
 import ExploreBtn from '@/components/ExploreBtn';
 import EventCard from '@/components/EventCard';
-import {events} from '@/lib/events';
+// import {events} from '@/lib/events';
+import { IEvent } from '@/database/event.model';
 
-export default function Home() {
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+export default async function Home() {
+  const res = await fetch(`${BASE_URL}/api/events`, {cache: 'no-store'});
+  const {events} = await res.json();
+  console.log('Fetched events data:');
+
   return (
     <div>
       <section>
@@ -18,7 +24,7 @@ export default function Home() {
           <h3>Features Events</h3>
 
           <ul className='events'>
-            {events.map((event) => (
+            {events.map((event: IEvent) => (
               <li key={event.title} className='event-item'>
                 <EventCard {...event}/>
               </li>
