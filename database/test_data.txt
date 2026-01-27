@@ -10,7 +10,7 @@ test data for postman
   "location": "San Francisco, CA",
   "date": "2025-04-10",
   "time": "08:30",
-  "mode": "Hybrid (In-Person & Online)",
+  "mode": "hybrid",
   "audience": "Cloud engineers, DevOps, enterprise leaders, AI researchers",
   "agenda": [
     "08:30 AM - 09:30 AM | Keynote: AI-Driven Cloud Infrastructure",
@@ -26,6 +26,8 @@ test data for postman
 
 bulk edit version
 
+1
+
 title:Cloud Next 2026
 description:Google's premier cloud computing event, showcasing innovations in AI, infrastructure, and enterprise solutions.
 overview:Cloud Next 2025 highlights the latest in cloud-native development, Kubernetes, AI, and enterprise scalability. Developers, architects, and executives gather to learn about new Google Cloud services, best practices, and success stories.
@@ -39,3 +41,191 @@ audience:Cloud engineers, DevOps, enterprise leaders, AI researchers
 agenda:08:30 AM - 09:30 AM | Keynote: AI-Driven Cloud Infrastructure;09:45 AM - 11:00 AM | Deep Dives: Kubernetes, Data Analytics, Security;11:15 AM - 12:30 PM | Product Demos & Networking;12:30 PM - 01:30 PM | Lunch;01:30 PM - 03:00 PM | Workshops: Scaling with GCP;03:15 PM - 04:30 PM | Fireside Chat: The Future of Enterprise Cloud
 organizer:Google Cloud organizes Cloud Next to connect global businesses, developers, and innovators with the latest technologies and best practices in cloud computing.
 tags:Cloud;DevOps;Kubernetes;AI
+
+
+2
+
+title:React Summit 2026
+description:A premier conference for React developers, featuring talks on the latest in React ecosystem, performance, and best practices.
+overview:React Summit brings together developers to explore cutting-edge React features, state management, testing, and real-world applications. Join workshops, panels, and networking sessions with industry experts.
+image:
+venue:Convention Center
+location:New York, NY
+date:2026-05-15
+time:09:00
+mode:offline
+audience:Frontend developers, React enthusiasts, UI/UX designers
+agenda:09:00 AM - 10:00 AM | Opening Keynote: Future of React;10:15 AM - 11:30 AM | Deep Dives: Hooks & Suspense;11:45 AM - 01:00 PM | Workshops: Advanced Patterns;01:00 PM - 02:00 PM | Lunch;02:00 PM - 03:30 PM | Lightning Talks;03:45 PM - 05:00 PM | Panel: React in Enterprise
+organizer:React Summit organizers focus on fostering the React community through education and innovation.
+tags:React;JavaScript;Frontend;Web Development
+
+
+3
+
+title:Summer Music Festival 2026
+description:An annual outdoor music festival featuring top artists from various genres, with food, art, and entertainment.
+overview:Experience live performances from international musicians, explore art installations, and enjoy diverse culinary options in a vibrant festival atmosphere.
+image:
+venue:Central Park
+location:Austin, TX
+date:2026-07-20
+time:12:00
+mode:offline
+audience:Music lovers, families, young adults
+agenda:12:00 PM - 01:00 PM | Opening Ceremony;01:00 PM - 03:00 PM | Main Stage Performances;03:00 PM - 04:00 PM | Food & Art Exhibits;04:00 PM - 06:00 PM | Evening Concerts;06:00 PM - 08:00 PM | Special Guest Performances;08:00 PM - 10:00 PM | Closing Fireworks
+organizer:Music Festival Productions brings together artists and fans for unforgettable experiences.
+tags:Music;Festival;Entertainment;Outdoor
+
+
+4
+
+title:Global Sports Championship 2026
+description:International championship featuring teams from around the world competing in various sports disciplines.
+overview:Watch elite athletes compete in soccer, basketball, and track events, with opportunities for fan engagement and cultural celebrations.
+image:
+venue:Olympic Stadium
+location:London, UK
+date:2026-08-10
+time:10:00
+mode:hybrid
+audience:Sports fans, athletes, families
+agenda:10:00 AM - 12:00 PM | Opening Ceremonies;12:00 PM - 02:00 PM | Soccer Matches;02:00 PM - 03:00 PM | Break & Exhibitions;03:00 PM - 05:00 PM | Basketball Tournaments;05:00 PM - 07:00 PM | Track & Field Events;07:00 PM - 09:00 PM | Award Ceremonies
+organizer:International Sports Federation promotes global athletic excellence and unity.
+tags:Sports;Championship;International;Competition
+
+5
+
+title:AI Expo 2026
+description:A global expo showcasing breakthroughs in artificial intelligence, model deployments, and responsible AI practices.
+overview:AI Expo brings together researchers, engineers, and business leaders to explore the latest AI models, deployment strategies, and governance frameworks.
+image:
+venue:Convention Hall A
+location:San Jose, CA
+date:2026-03-22
+time:09:00
+mode:hybrid
+audience:AI researchers, ML engineers, product managers, policy makers
+agenda:09:00 AM - 10:00 AM | Opening Keynote: Responsible AI;10:15 AM - 12:00 PM | Model Deployment Workshops;12:00 PM - 01:00 PM | Lunch;01:00 PM - 03:00 PM | Panel: AI in Industry;03:15 PM - 05:00 PM | Demos & Startups
+organizer:AI Innovators Network
+tags:AI;ML;Infrastructure;Ethics
+
+
+6
+
+title:Blockchain Convergence 2026
+description:Conference exploring interoperability, decentralized finance, and real-world blockchain applications.
+overview:Leaders and developers discuss scaling solutions, cross-chain protocols, and regulatory landscapes for enterprise blockchain adoption.
+image:
+venue:Grand Conference Center
+location:Toronto, ON
+date:2026-06-10
+time:10:00
+mode:offline
+audience:Blockchain developers, fintech companies, regulators
+agenda:10:00 AM - 11:00 AM | Keynote: The State of Blockchain;11:15 AM - 12:45 PM | DeFi Roundtables;01:45 PM - 03:15 PM | Interoperability Workshops;03:30 PM - 05:00 PM | Hackathon Showcase
+organizer:ChainWorks Collective
+tags:Blockchain;DeFi;Fintech;Interoperability
+
+
+7
+
+title:Design Systems Conf 2026
+description:A gathering for designers and front-end engineers focused on scalable design systems and component libraries.
+overview:Sessions cover design tokens, accessibility, cross-team governance, and integrating design systems into large codebases.
+image:
+venue:Studio Theater
+location:Portland, OR
+date:2026-04-18
+time:09:30
+mode:offline
+audience:Designers, front-end engineers, product managers
+agenda:09:30 AM - 10:30 AM | Opening: Design at Scale;10:45 AM - 12:00 PM | Tokens & Theming;01:00 PM - 02:30 PM | Accessibility Deep Dive;02:45 PM - 04:00 PM | Adoption Case Studies
+organizer:DesignOps Guild
+tags:Design;Frontend;Accessibility;UX
+
+
+8
+
+title:Green Tech Summit 2026
+description:Summit focused on sustainability, clean energy innovations, and climate tech investments.
+overview:Investors, startups, and policymakers discuss decarbonization technologies, energy storage, and sustainable infrastructure.
+image:
+venue:Eco Center
+location:Copenhagen, DK
+date:2026-09-02
+time:08:30
+mode:hybrid
+audience:Climate tech entrepreneurs, investors, policymakers
+agenda:08:30 AM - 10:00 AM | Keynote: Tech for a Low-Carbon Future;10:15 AM - 12:00 PM | Funding Climate Startups;01:00 PM - 03:00 PM | Tech Demos;03:15 PM - 04:30 PM | Policy Roundtable
+organizer:Green Futures Alliance
+tags:Sustainability;Energy;Climate;Investing
+
+
+9
+
+title:Startup Pitch Night 2026
+description:Evening event where early-stage startups pitch to angel investors and VCs.
+overview:Selected founders present rapid pitches followed by networking and investor feedback sessions.
+image:
+venue:Innovation Loft
+location:Austin, TX
+date:2026-02-28
+time:18:00
+mode:offline
+audience:Founders, angels, VCs, mentors
+agenda:06:00 PM - 06:30 PM | Networking;06:30 PM - 08:30 PM | Pitch Rounds;08:30 PM - 09:30 PM | Investor Feedback & Networking
+organizer:Founders Forum
+tags:Startups;Pitch;Investors;Networking
+
+
+10
+
+title:Film & Media Forum 2026
+description:A forum for filmmakers, producers, and digital media experts discussing distribution and storytelling.
+overview:Includes panels on streaming strategies, monetization, immersive storytelling, and festival programming.
+image:
+venue:Cultural Center
+location:Los Angeles, CA
+date:2026-11-05
+time:10:00
+mode:offline
+audience:Filmmakers, producers, media buyers, festival curators
+agenda:10:00 AM - 11:30 AM | Keynote: New Narratives;11:45 AM - 01:00 PM | Distribution Models;02:00 PM - 03:30 PM | Immersive Media Workshop;04:00 PM - 05:30 PM | Festival Programming Tips
+organizer:Motion Media Collective
+tags:Film;Media;Distribution;Storytelling
+
+
+11
+
+title:Education Tech Expo 2026
+description:Expo highlighting edtech platforms, adaptive learning, and classroom innovations.
+overview:Educators and product teams share case studies in personalized learning, analytics, and hybrid classrooms.
+image:
+venue:Exhibition Hall B
+location:Chicago, IL
+date:2026-08-25
+time:09:00
+mode:hybrid
+audience:Educators, edtech founders, school administrators
+agenda:09:00 AM - 10:00 AM | Opening Keynote: Learning of the Future;10:15 AM - 12:00 PM | Adaptive Learning Demos;01:00 PM - 03:00 PM | Implementation Workshops;03:15 PM - 04:30 PM | Policy & Procurement
+organizer:EdTech Alliance
+tags:Education;Technology;K12;HigherEd
+
+
+12
+
+title:Culinary Arts Fair 2026
+description:Festival celebrating culinary creativity, local producers, and chef showcases.
+overview:Food stalls, chef demos, and tasting sessions highlighting sustainability, regional cuisines, and culinary innovation.
+image:
+venue:Market Square
+location:Seattle, WA
+date:2026-07-12
+time:11:00
+mode:offline
+audience:Food lovers, chefs, restaurateurs
+agenda:11:00 AM - 12:30 PM | Chef Demonstrations;01:00 PM - 03:00 PM | Tasting Sessions;03:30 PM - 05:00 PM | Local Producer Market;05:30 PM - 07:00 PM | Closing Chef Panel
+organizer:Culinary Arts Collective
+tags:Food;Festival;Culinary;Local
+
+

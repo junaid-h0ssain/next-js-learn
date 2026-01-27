@@ -8,7 +8,7 @@ const Navbar = () => {
         <nav>
             <Link href="/" className="logo">
                 <Image src="/icons/logo.png" alt="Logo" width={50} height={50} />
-                <p>Event</p>
+                <p className='text-blue-300'>Event</p>
             </Link>
 
             <ul className='text-amber-50'>
