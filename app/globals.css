@@ -134,6 +134,9 @@
   ul {
     @apply list-disc list-inside;
   }
+  p {
+    @apply text-light-100 text-lg max-sm:text-sm text-amber-100;
+  }
 }
 
 @layer components {
