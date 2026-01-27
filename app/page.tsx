@@ -10,7 +10,7 @@ export default async function Home() {
 
   try {
     await connectDB();
-    events = await Event.find().sort({ createdAt: -1 });
+    events = await Event.find().sort({ createdAt: -1 }).lean();
   } catch (error) {
     console.error('Error fetching events:', error);
     // Fall back to static events
