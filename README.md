@@ -2,6 +2,8 @@
 
 An event management and discovery platform built with Next.js, featuring interactive 3D graphics, animations, and a MongoDB backend. The application allows users to explore events, create new events, manage bookings, and authenticate with a login system.
 
+### Demo link - https://next-js-learn-omega-taupe.vercel.app/
+
 ## Tech Stack
 
 - **Framework**: Next.js 16.1.1 with App Router and TypeScript 5
